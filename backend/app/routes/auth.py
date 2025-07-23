@@ -71,3 +71,27 @@ def profile():
         'profile_image': user.profile_image,
         'is_admin': user.is_admin
     })
+
+@auth_bp.route('/profile/update', methods=['PUT'])
+@login_required
+def update_profile():
+    data = request.get_json()
+
+    if 'name' in data:
+        current_user.name = data['name']
+
+    if 'email' in data:
+        existing_user = User.query.filter_by(email=data['email']).first()
+        if existing_user and existing_user.id != current_user.id:
+            return jsonify({'message': 'Email already in use'}), 400
+        current_user.email = data['email']
+
+    if 'password' in data:
+        current_user.set_password(data['password'])
+
+    if 'profile_image' in data:
+        current_user.profile_image = data['profile_image']  # URL or base64 string
+
+    db.session.commit()
+    return jsonify({'message': 'Profile updated successfully'})
+
