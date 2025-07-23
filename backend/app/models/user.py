@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     profile_image = db.Column(db.String(120), default='default.png')
     wallet_balance = db.Column(db.Float, default=0.0)
     is_admin = db.Column(db.Boolean, default=False)
+    is_active = db.Column(db.Boolean, default=True)  # ✅ For suspension support
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     transactions = db.relationship('Transaction', backref='user', lazy=True)
@@ -22,6 +23,13 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def update_profile(self, name=None, profile_image=None):
+        if name:
+            self.name = name
+        if profile_image:
+            self.profile_image = profile_image
+        db.session.commit()
 
     def __repr__(self):
         return f'<User {self.email}>'

@@ -72,6 +72,7 @@ def profile():
         'is_admin': user.is_admin
     })
 
+
 @auth_bp.route('/profile/update', methods=['PUT'])
 @login_required
 def update_profile():
@@ -90,8 +91,7 @@ def update_profile():
         current_user.set_password(data['password'])
 
     if 'profile_image' in data:
-        current_user.profile_image = data['profile_image']  # URL or base64 string
+        current_user.profile_image = data['profile_image']  # Could be URL or base64
 
     db.session.commit()
     return jsonify({'message': 'Profile updated successfully'})
-
