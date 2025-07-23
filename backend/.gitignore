@@ -1,0 +1,29 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Environment files
+.env
+instance/config.py
+
+# SQLite database
+*.sqlite3
+*.db
+
+# Migrations
+migrations/
+
+# VS Code settings
+.vscode/
+
+# Byte-compiled / optimized / DLL files
+*.pyc
+*.pyo
+*.pyd
+
+# Flask instance folder
+instance/
+
+# OS files
+.DS_Store
+Thumbs.db
