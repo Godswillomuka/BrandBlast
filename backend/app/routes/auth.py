@@ -6,6 +6,11 @@ from app.utils.mailer import send_reset_email
 
 auth_bp = Blueprint('auth', __name__)
 
+
+@auth_bp.route('/')
+def home():
+    return "<h1>BrandBlast API is running</h1>"
+
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
